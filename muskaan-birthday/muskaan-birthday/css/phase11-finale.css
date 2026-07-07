@@ -1,0 +1,118 @@
+/* ============================================
+   PHASE 11 — FINALE
+   ============================================ */
+
+.phase11 {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #060608;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.phase11.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.p11-cosmos-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Floating hearts layer */
+.p11-hearts {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.p11-heart {
+  position: absolute;
+  bottom: -60px;
+  font-size: 1.4rem;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 8px rgba(240, 168, 201, 0.6));
+  animation: p11-rise linear forwards;
+}
+
+@keyframes p11-rise {
+  to {
+    transform: translateY(-110vh) translateX(var(--drift, 0px)) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+.p11-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+.p11-eyebrow {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 500;
+  opacity: 0;
+}
+
+.p11-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-top: -0.3rem;
+  opacity: 0;
+}
+
+.p11-subtitle {
+  font-size: var(--fs-body-lg);
+  color: var(--text-dim);
+  margin-top: -0.3rem;
+  opacity: 0;
+}
+
+.p11-continue-btn {
+  margin-top: var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2.2rem;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gradient-gold-text);
+  border-radius: 999px;
+  opacity: 0;
+  transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p11-continue-btn:hover {
+  box-shadow: var(--glow-gold);
+  transform: scale(1.03) translateY(-1px);
+}
+
+.phase11.is-leaving {
+  animation: phase-exit var(--dur-slow) var(--ease-cinematic) forwards;
+}

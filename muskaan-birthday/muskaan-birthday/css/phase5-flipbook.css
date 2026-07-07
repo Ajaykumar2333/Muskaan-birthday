@@ -1,0 +1,371 @@
+/* ============================================
+   PHASE 5 — INTERACTIVE FLIP BOOK (hardcover redesign)
+   No scrolling inside any page, ever. Fixed page size.
+   Short, spaced-out lines by design — matches how the story is written.
+   ============================================ */
+
+.phase5 {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 10%, #17111f 0%, #09090b 55%, #060608 100%);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.phase5.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.p5-cosmos-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.p5-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-sm);
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.p5-eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 500;
+}
+
+.p5-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    color: var(--text);
+    margin-top: -0.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+
+/* ---- Book + nav row ---- */
+
+.p5-book-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 3vw, 2rem);
+    width: 100%;
+}
+
+.p5-nav-btn {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    color: var(--accent-gold-bright);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p5-nav-btn:hover:not(:disabled) {
+    border-color: var(--border-glass-hover);
+    box-shadow: var(--glow-gold);
+    transform: scale(1.08);
+}
+
+.p5-nav-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+}
+
+
+/* ---- StPageFlip container ----
+   Portrait single-page on phones; widens into a real two-page open-book
+   spread once there's enough room (tablet/desktop). Height has a hard
+   floor so pages never get squeezed shorter than their content needs. */
+
+.p5-book-wrap {
+    position: relative;
+    width: min(380px, 84vw);
+    height: clamp(460px, 64vh, 600px);
+    filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.65));
+}
+
+@media (min-width: 720px) {
+    .p5-book-wrap {
+        width: min(820px, 90vw);
+    }
+}
+
+#p5-flipbook {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ---- Each page: hardcover paper feel ---- */
+
+.p5-page {
+    position: relative;
+    background: linear-gradient(160deg, #1c1628 0%, #100c19 100%);
+    border: 1px solid rgba(217, 180, 95, 0.28);
+    color: var(--text);
+    overflow: hidden;
+    /* guarantees no scrolling appears, ever */
+}
+
+
+/* Subtle fiber/grain texture, like real cardstock, layered under the gradient */
+
+.p5-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 160px 160px;
+    pointer-events: none;
+}
+
+
+/* Soft inset shadow around every edge — a page sitting inside a bound
+   book, not a flat rectangle floating in space */
+
+.p5-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    box-shadow: inset 0 0 34px rgba(0, 0, 0, 0.55), inset 0 0 3px rgba(255, 255, 255, 0.06);
+    pointer-events: none;
+}
+
+
+/* A faint curved sheen along the outer edge — suggests the paper isn't
+   perfectly flat, like light catching a gentle page curl */
+
+.p5-page-curl {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 26px;
+    z-index: 1;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05) 60%, rgba(255, 255, 255, 0.1));
+    pointer-events: none;
+}
+
+.p5-page-inner {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.6rem, 6vw, 2.6rem) clamp(1.5rem, 5.5vw, 2.3rem);
+    box-sizing: border-box;
+    gap: 0.4rem;
+}
+
+.p5-chapter-eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    text-align: center;
+    margin-bottom: 0.3rem;
+}
+
+.p5-chapter-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    text-align: center;
+    margin-bottom: 0.9rem;
+    background: var(--gradient-gold-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.p5-continued-tag {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.76rem;
+    text-align: center;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+}
+
+
+/* ---- The story text itself: short lines, generous rhythm, centered ---- */
+
+.p5-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.55em;
+    text-align: center;
+}
+
+.p5-line {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 3vw, 1.15rem);
+    line-height: 1.45;
+    color: var(--text-dim);
+}
+
+.p5-line--quote {
+    font-style: italic;
+    color: var(--text);
+}
+
+.p5-line--emphasis {
+    color: var(--accent-pink);
+}
+
+
+/* ---- Cover ---- */
+
+.p5-page--cover .p5-page-inner {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(circle at 50% 30%, rgba(157, 124, 232, 0.18), transparent 65%);
+}
+
+.p5-cover-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    background: var(--gradient-gold-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.p5-cover-subtitle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    color: var(--text-dim);
+    margin-bottom: 1.4rem;
+}
+
+.p5-cover-divider {
+    width: 44px;
+    height: 1px;
+    margin: 0 auto 1.4rem;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.p5-cover-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(0.82rem, 2.6vw, 0.95rem);
+    color: var(--text-faint);
+    max-width: 260px;
+}
+
+
+/* ---- Photo pages ---- */
+
+.p5-photo-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(217, 180, 95, 0.35);
+    background: var(--bg-glass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.6);
+}
+
+.p5-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.p5-photo-frame--full {
+    aspect-ratio: 3 / 4;
+}
+
+.p5-photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-faint);
+    font-size: 0.78rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.p5-photo-placeholder .icon {
+    font-size: 1.6rem;
+}
+
+.p5-final-btn {
+    align-self: center;
+    margin-top: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--gradient-gold-text);
+    border-radius: 999px;
+    transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p5-final-btn:hover {
+    box-shadow: var(--glow-gold);
+    transform: scale(1.03) translateY(-1px);
+}
+
+.p5-hint {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+}
+
+.phase5.is-leaving {
+    animation: phase-exit var(--dur-slow) var(--ease-cinematic) forwards;
+}
+
+@media (max-width: 480px) {
+    .p5-line {
+        font-size: 1rem;
+    }
+}
