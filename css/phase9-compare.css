@@ -1,0 +1,187 @@
+/* ============================================
+   PHASE 9 — HOW MUCH I LOVE YOU
+   ============================================ */
+
+.phase9 {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 10%, #17111f 0%, #09090b 55%, #060608 100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.phase9.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.p9-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-sm);
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.p9-eyebrow {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.p9-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  color: var(--text);
+  margin-top: -0.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.p9-bars {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.p9-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.p9-bar-label {
+  width: 110px;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.p9-bar-track {
+  flex: 1;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  overflow: hidden;
+}
+
+.p9-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+}
+
+.p9-bar-row--muskaan .p9-bar-fill {
+  background: var(--gradient-gold-text);
+  box-shadow: 0 0 14px rgba(217, 180, 95, 0.6);
+}
+
+.p9-bar-pct {
+  width: 46px;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Infinity / error sequence ---- */
+.p9-climax {
+  margin-top: var(--space-md);
+  min-height: 3em;
+}
+
+.p9-climax-line {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  opacity: 0;
+}
+
+.p9-climax-line.is-visible {
+  opacity: 1;
+  animation: p9-fade-in 0.5s ease forwards;
+}
+
+.p9-climax-line.is-error {
+  color: var(--accent-pink);
+  font-family: monospace;
+  letter-spacing: 0.08em;
+}
+
+.p9-climax-line.is-final {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes p9-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.p9-continue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: var(--space-md);
+  padding: 0.85rem 2.2rem;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gradient-gold-text);
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease-cinematic), transform var(--dur-fast) var(--ease-soft),
+    box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p9-continue-btn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.p9-continue-btn:hover {
+  box-shadow: var(--glow-gold);
+  transform: scale(1.03) translateY(-1px);
+}
+
+.phase9.is-leaving {
+  animation: phase-exit var(--dur-slow) var(--ease-cinematic) forwards;
+}
+
+@media (max-width: 480px) {
+  .p9-bar-label {
+    width: 84px;
+    font-size: 0.75rem;
+  }
+}

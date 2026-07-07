@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Muskaan ❤️</title>
+    <meta name="description" content="A story made for one person." />
+
+    <!-- Fonts: Cormorant Garamond (display) + Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/phase0-gate.css" />
+    <link rel="stylesheet" href="css/phase1-password.css" />
+    <link rel="stylesheet" href="css/phase2-cinematic.css" />
+    <link rel="stylesheet" href="css/phase3-wheel.css" />
+    <link rel="stylesheet" href="css/phase4-cake.css" />
+    <link rel="stylesheet" href="css/phase5-flipbook.css" />
+    <link rel="stylesheet" href="css/phase6-gallery.css" />
+    <link rel="stylesheet" href="css/phase7-video.css" />
+    <link rel="stylesheet" href="css/phase8-counter.css" />
+    <link rel="stylesheet" href="css/phase9-compare.css" />
+    <link rel="stylesheet" href="css/phase10-calculator.css" />
+    <link rel="stylesheet" href="css/phase11-finale.css" />
+    <link rel="stylesheet" href="css/phase12-letter.css" />
+    <link rel="stylesheet" href="css/phase13-question.css" />
+    <link rel="stylesheet" href="css/phase14-ending.css" />
+</head>
+
+<body>
+
+    <!-- ============================================
+       PHASE 0 — COUNTDOWN GATE
+       Locks the whole site until the unlock date/time set in
+       js/phase0-gate.js. "Skip For Now" is a dev-only bypass —
+       remove that button before the real handoff if you want.
+       ============================================ -->
+    <section class="phase0-gate" id="phase0-gate">
+        <div class="gate-inner">
+            <p class="gate-eyebrow">Something Is Coming</p>
+            <h1 class="gate-title">Not Yet, Muskaan ❤️</h1>
+
+            <div class="gate-countdown">
+                <div class="gate-unit">
+                    <p class="gate-unit-value" id="gate-days">0</p>
+                    <p class="gate-unit-label">Days</p>
+                </div>
+                <div class="gate-unit">
+                    <p class="gate-unit-value" id="gate-hours">00</p>
+                    <p class="gate-unit-label">Hours</p>
+                </div>
+                <div class="gate-unit">
+                    <p class="gate-unit-value" id="gate-minutes">00</p>
+                    <p class="gate-unit-label">Minutes</p>
+                </div>
+                <div class="gate-unit">
+                    <p class="gate-unit-value" id="gate-seconds">00</p>
+                    <p class="gate-unit-label">Seconds</p>
+                </div>
+            </div>
+
+            <p class="gate-message" id="gate-message"></p>
+
+            <button class="gate-skip" id="gate-skip-btn" type="button">Skip For Now</button>
+        </div>
+    </section>
+
+    <!-- Ambient particle atmosphere — persists across all phases -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Background music — plays through the whole journey. Swap the file. -->
+    <audio id="bg-music" src="assets/audio/background-music.mp3" loop preload="auto"></audio>
+
+    <!-- ============================================
+       PHASE 1 — ENTRY SCREEN
+       ============================================ -->
+    <main class="phase1" id="phase1">
+        <div class="entry-card" role="region" aria-label="Birthday website entry">
+            <p class="entry-eyebrow">For Someone Special</p>
+            <h1 class="entry-title">Muskaan</h1>
+            <p class="entry-subtitle">Only the Birthday Girl Can Enter</p>
+
+            <div class="entry-divider" aria-hidden="true"></div>
+
+            <p class="entry-question" id="entry-question">
+                What do you think I like the most about you?
+            </p>
+
+            <div class="entry-options" role="group" aria-labelledby="entry-question">
+                <button class="entry-option" data-answer="cheeks" type="button">
+          <span class="opt-icon" aria-hidden="true">😊</span> Cheeks
+        </button>
+                <button class="entry-option" data-answer="eyes" type="button">
+          <span class="opt-icon" aria-hidden="true">👀</span> Eyes
+        </button>
+                <button class="entry-option" data-answer="lips" type="button">
+          <span class="opt-icon" aria-hidden="true">💋</span> Lips
+        </button>
+                <button class="entry-option is-all" data-answer="all" type="button">
+          <span class="opt-icon" aria-hidden="true">❤️</span> All of the Above
+        </button>
+            </div>
+
+            <p class="entry-feedback" id="entry-feedback" aria-live="polite"></p>
+
+            <button class="unlock-btn" id="unlock-btn" type="button">
+        Unlock Website
+      </button>
+        </div>
+    </main>
+
+    <!-- ============================================
+       PHASE 2 — CINEMATIC INTRO
+       Hidden until Phase 1 dispatches "phase1:complete".
+       ============================================ -->
+    <section class="phase2" id="phase2" aria-hidden="true">
+        <div class="p2-black-veil" id="p2-black-veil"></div>
+        <canvas id="cosmos-canvas" aria-hidden="true"></canvas>
+
+        <div class="phase2-text-layer">
+            <p class="p2-line" id="p2-presents">Ajay Kumar Presents</p>
+
+            <div id="p2-story">
+                <span class="p2-story-line">A Story Made</span>
+                <span class="p2-story-line">For One Person</span>
+            </div>
+
+            <h2 class="p2-name" id="p2-name">❤️ MUSKAAN ❤️</h2>
+
+            <div class="p2-loading" id="p2-loading">
+                <p class="p2-loading-title" id="p2-loading-title">Access Granted...</p>
+                <p class="p2-loading-msg" id="p2-loading-msg"></p>
+                <div class="p2-bar-track">
+                    <div class="p2-bar-fill" id="p2-bar-fill"></div>
+                </div>
+                <p class="p2-loading-pct" id="p2-loading-pct">0%</p>
+            </div>
+
+            <p class="p2-heart-line" id="p2-heart-line">
+                Every memory with you became my favorite story.
+            </p>
+
+            <div class="p2-countdown" id="p2-countdown"></div>
+
+            <div class="p2-celebration" id="p2-celebration">
+                <p class="p2-emoji" aria-hidden="true">🎉</p>
+                <h1 class="p2-happy-birthday">HAPPY BIRTHDAY</h1>
+                <h2 class="p2-muskaan-name">MUSKAAN ❤️</h2>
+            </div>
+        </div>
+
+        <div class="p2-balloons" id="p2-balloons" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============================================
+       PHASE 3 — SPIN THE WHEEL (premium redesign)
+       Hidden until Phase 2 dispatches "phase2:complete".
+       ============================================ -->
+    <section class="phase3" id="phase3">
+        <div class="p3-backdrop" aria-hidden="true">
+            <span class="p3-orb p3-orb--purple"></span>
+            <span class="p3-orb p3-orb--pink"></span>
+            <span class="p3-orb p3-orb--gold"></span>
+        </div>
+        <canvas id="p3-cosmos-canvas" class="p3-cosmos-canvas" aria-hidden="true"></canvas>
+
+        <div class="p3-inner">
+            <p class="p3-eyebrow">A Little Surprise</p>
+            <h2 class="p3-title">Spin The Wheel</h2>
+            <p class="p3-subtitle">Let's see what surprise is waiting for you ❤️</p>
+
+            <div class="p3-wheel-wrap">
+                <div class="p3-wheel-outer-glow" aria-hidden="true"></div>
+                <div class="p3-pointer" aria-hidden="true"></div>
+
+                <div class="p3-wheel-disc" id="p3-wheel-disc">
+                    <svg class="p3-wheel-svg" viewBox="0 0 600 600" aria-hidden="true">
+            <defs>
+              <linearGradient id="p3NavyA" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#211c38" />
+                <stop offset="100%" stop-color="#0d0b16" />
+              </linearGradient>
+              <linearGradient id="p3NavyB" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2a2140" />
+                <stop offset="100%" stop-color="#14101f" />
+              </linearGradient>
+              <linearGradient id="p3GoldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f2cf82" />
+                <stop offset="50%" stop-color="#d9b45f" />
+                <stop offset="100%" stop-color="#f0a8c9" />
+              </linearGradient>
+            </defs>
+            <g id="p3-wheel-group"></g>
+          </svg>
+                </div>
+
+                <div class="p3-wheel-sheen" aria-hidden="true"></div>
+                <div class="p3-labels" id="p3-labels"></div>
+
+                <button class="p3-hub" id="p3-hub" type="button" aria-label="Spin the wheel">
+          <span class="p3-hub-text">Spin</span>
+        </button>
+            </div>
+
+            <p class="p3-hint">Tap the center to spin</p>
+        </div>
+
+        <!-- Result / claim popup -->
+        <div class="p3-result-overlay" id="p3-result-overlay">
+            <div class="p3-result-card">
+                <div class="p3-result-body" id="p3-result-body">
+                    <p class="p3-result-emoji" id="p3-result-emoji"></p>
+                    <h3 class="p3-result-title" id="p3-result-title"></h3>
+                    <p class="p3-result-desc" id="p3-result-desc"></p>
+                    <button class="p3-claim-btn" id="p3-claim-btn" type="button">
+            Claim My Reward ❤️
+          </button>
+                </div>
+
+                <div class="p3-claimed-block" id="p3-claimed-block">
+                    <p class="p3-claimed-text">Reward Successfully Claimed ❤️</p>
+                    <button class="p3-continue-btn" id="p3-continue-btn" type="button">
+            Continue
+          </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 4 — BIRTHDAY CAKE
+       Hidden until Phase 3 dispatches "phase3:complete".
+       ============================================ -->
+    <section class="phase4" id="phase4">
+        <div class="p4-backdrop" aria-hidden="true">
+            <span class="p4-orb p4-orb--purple"></span>
+            <span class="p4-orb p4-orb--gold"></span>
+        </div>
+
+        <div class="p4-inner">
+            <p class="p4-eyebrow">Make A Wish</p>
+            <h2 class="p4-title">Blow Out The Candles</h2>
+            <p class="p4-subtitle">Tap each flame to make it disappear 🕯️</p>
+
+            <div class="cake-scene">
+                <div class="cake">
+                    <div class="candles" id="p4-candles">
+                        <button class="candle" type="button" aria-label="Blow out candle">
+              <span class="flame"></span>
+              <span class="wick"></span>
+            </button>
+                        <button class="candle" type="button" aria-label="Blow out candle">
+              <span class="flame"></span>
+              <span class="wick"></span>
+            </button>
+                        <button class="candle" type="button" aria-label="Blow out candle">
+              <span class="flame"></span>
+              <span class="wick"></span>
+            </button>
+                        <button class="candle" type="button" aria-label="Blow out candle">
+              <span class="flame"></span>
+              <span class="wick"></span>
+            </button>
+                        <button class="candle" type="button" aria-label="Blow out candle">
+              <span class="flame"></span>
+              <span class="wick"></span>
+            </button>
+                    </div>
+
+                    <div class="cake-tier cake-tier--top"></div>
+                    <div class="cake-tier cake-tier--bottom">
+                        <div class="cake-decor">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="cake-plate"></div>
+                </div>
+            </div>
+
+            <p class="p4-hint" id="p4-progress">0 of 5 candles out</p>
+        </div>
+
+        <!-- Celebration overlay -->
+        <div class="p4-celebrate" id="p4-celebrate">
+            <p class="p4-celebrate-emoji" aria-hidden="true">🎂</p>
+            <h2 class="p4-celebrate-title">Happy Birthday Muskaan ❤️</h2>
+            <button class="p4-continue-btn" id="p4-continue-btn" type="button">
+        Continue
+      </button>
+        </div>
+
+        <!-- Swap with your own track -->
+        <audio id="p4-audio" src="assets/audio/happy-birthday.mp3" preload="none"></audio>
+    </section>
+
+    <!-- ============================================
+       PHASE 5 — INTERACTIVE FLIP BOOK
+       Hidden until Phase 4 dispatches "phase4:complete".
+       ============================================ -->
+    <section class="phase5" id="phase5">
+        <canvas id="p5-cosmos-canvas" class="p5-cosmos-canvas" aria-hidden="true"></canvas>
+
+        <div class="p5-inner">
+            <p class="p5-eyebrow">Our Story</p>
+            <h2 class="p5-title">Turn The Page</h2>
+
+            <div class="p5-book-row">
+                <button class="p5-nav-btn" id="p5-prev" type="button" aria-label="Previous page">‹</button>
+
+                <div class="p5-book-wrap">
+                    <div id="p5-flipbook">
+
+                        <!-- COVER -->
+                        <div class="p5-page p5-page--cover">
+                            <div class="p5-page-inner">
+                                <h3 class="p5-cover-title">Our Little Story ❤️</h3>
+                                <p class="p5-cover-subtitle">Ajay Kumar &amp; Muskaan</p>
+                                <div class="p5-cover-divider"></div>
+                                <p class="p5-cover-quote">"A few pages of a story that changed my life forever."</p>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 1 — Happy Birthday -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 1</p>
+                                <h3 class="p5-chapter-title">Happy Birthday</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line p5-line--emphasis">Happy Birthday Muskaan ❤️</p>
+                                    <p class="p5-line">This isn't just a birthday website.</p>
+                                    <p class="p5-line">It's a small collection of memories...</p>
+                                    <p class="p5-line">Let's turn the pages together.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 2 — The Girl I Never Noticed -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 2</p>
+                                <h3 class="p5-chapter-title">The Girl I Never Noticed</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">When you first joined our company...</p>
+                                    <p class="p5-line">You were just another new employee.</p>
+                                    <p class="p5-line">For three or four days...</p>
+                                    <p class="p5-line">I didn't even pay much attention.</p>
+                                    <p class="p5-line">Life felt completely normal.</p>
+                                    <p class="p5-line">Little did I know...</p>
+                                    <p class="p5-line">Everything was about to change.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 3 — The Moment Everything Changed (Page A) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 3</p>
+                                <h3 class="p5-chapter-title">The Moment Everything Changed</h3>
+                                <div class="p5-photo-frame p5-photo-frame--portrait">
+                                    <img src="assets/images/muskaan-portrait.jpeg" alt="Muskaan" />
+                                </div>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Then came the office event.</p>
+                                    <p class="p5-line">That day...</p>
+                                    <p class="p5-line">You weren't wearing your nose pin.</p>
+                                    <p class="p5-line">For the first time... I truly saw you.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 3 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 3, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">I still don't know how to explain it.</p>
+                                    <p class="p5-line">It wasn't just beauty.</p>
+                                    <p class="p5-line">It felt like time stopped.</p>
+                                    <p class="p5-line">My heart raced. My mind went blank.</p>
+                                    <p class="p5-line">Butterflies filled my chest.</p>
+                                    <p class="p5-line">I'd never experienced that feeling before.</p>
+                                    <p class="p5-line p5-line--quote">That single moment quietly changed everything.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 4 — The Longest Weekend -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 4</p>
+                                <h3 class="p5-chapter-title">The Longest Weekend</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">That night... I couldn't sleep.</p>
+                                    <p class="p5-line">I kept thinking about you.</p>
+                                    <p class="p5-line">I searched for your Instagram.</p>
+                                    <p class="p5-line">I wanted to know more about you.</p>
+                                    <p class="p5-line">Sunday felt like it would never end.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 4 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 4, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">I was just waiting...</p>
+                                    <p class="p5-line">Waiting for Monday.</p>
+                                    <p class="p5-line p5-line--quote">I couldn't wait to see you again.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 5 — Our First Conversation -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 5</p>
+                                <h3 class="p5-chapter-title">Our First Conversation</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Monday finally arrived.</p>
+                                    <p class="p5-line">But... you didn't even look at me.</p>
+                                    <p class="p5-line">You didn't talk to me.</p>
+                                    <p class="p5-line">I kept wondering...</p>
+                                    <p class="p5-line">Did I do something wrong?</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 5 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 5, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Finally... I gathered all my courage.</p>
+                                    <p class="p5-line">I walked towards you.</p>
+                                    <p class="p5-line">With a nervous smile I asked...</p>
+                                    <p class="p5-line p5-line--quote">"Muskaan... what happened?</p>
+                                    <p class="p5-line p5-line--quote">Why aren't you talking to me?"</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 5 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 5, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">You smiled. You said,</p>
+                                    <p class="p5-line p5-line--quote">"Nothing happened, Ajay.</p>
+                                    <p class="p5-line p5-line--quote">You should be the one starting the conversation."</p>
+                                    <p class="p5-line">That tiny conversation became the beginning of something beautiful.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 6 — The Smartest Trick 😄 -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 6</p>
+                                <h3 class="p5-chapter-title">The Smartest Trick 😄</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">One day...</p>
+                                    <p class="p5-line">You mentioned a LinkedIn problem.</p>
+                                    <p class="p5-line">That became my golden opportunity.</p>
+                                    <p class="p5-line">I casually asked...</p>
+                                    <p class="p5-line p5-line--quote">"Give me your number. I'll help you."</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 6 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 6, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Maybe I solved your LinkedIn problem.</p>
+                                    <p class="p5-line">But honestly...</p>
+                                    <p class="p5-line">I was happier because I finally had your WhatsApp number.</p>
+                                    <p class="p5-line p5-line--quote">From that day... our conversations never really stopped.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 7 — Late Night Talks -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 7</p>
+                                <h3 class="p5-chapter-title">Late Night Talks</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Slowly...</p>
+                                    <p class="p5-line">One conversation became many.</p>
+                                    <p class="p5-line">One hour. Two hours.</p>
+                                    <p class="p5-line">Sometimes... three in the morning.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 7 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 7, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Those late-night conversations...</p>
+                                    <p class="p5-line">Those random laughs...</p>
+                                    <p class="p5-line">Those little moments...</p>
+                                    <p class="p5-line p5-line--quote">Will always stay close to my heart.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 8 — Our First Ride -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 8</p>
+                                <h3 class="p5-chapter-title">Our First Ride</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">One day...</p>
+                                    <p class="p5-line">I dropped you at the office on my bike.</p>
+                                    <p class="p5-line">It was only a short ride.</p>
+                                    <p class="p5-line p5-line--quote">But I'll never forget it.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 8 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 8, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Sometimes... life made things difficult.</p>
+                                    <p class="p5-line">People stared.</p>
+                                    <p class="p5-line">Situations became uncomfortable.</p>
+                                    <p class="p5-line">So instead... we travelled together in an auto.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 8 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 8, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Even that simple auto ride became one of my favorite memories.</p>
+                                    <p class="p5-line">Sometimes...</p>
+                                    <p class="p5-line p5-line--quote">The smallest journeys become the biggest memories.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 9 — From Friendship To Love -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 9</p>
+                                <h3 class="p5-chapter-title">From Friendship To Love</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">At first...</p>
+                                    <p class="p5-line">Even a hug felt impossible.</p>
+                                    <p class="p5-line">Whenever I tried... you became shy.</p>
+                                    <p class="p5-line p5-line--quote">It was honestly adorable.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 9 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 9, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Then came our first handshake.</p>
+                                    <p class="p5-line">More conversations. More trust. More smiles.</p>
+                                    <p class="p5-line">Without realizing it...</p>
+                                    <p class="p5-line p5-line--quote">Friendship slowly became love.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 10 — My Favourite Picture (Page A: photo only) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 10</p>
+                                <h3 class="p5-chapter-title">My Favourite Picture</h3>
+                                <div class="p5-photo-frame p5-photo-frame--full">
+                                    <img src="assets/images/first-selfie.jpeg" alt="Our first selfie" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 10 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 10, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">This picture...</p>
+                                    <p class="p5-line">Will always be one of my favorites.</p>
+                                    <p class="p5-line">Not because it's perfect.</p>
+                                    <p class="p5-line">But because it reminds me of how happy we were.</p>
+                                    <p class="p5-line p5-line--quote">Some pictures become memories forever.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 11 — My Promise ❤️ -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-chapter-eyebrow">Chapter 11</p>
+                                <h3 class="p5-chapter-title">My Promise ❤️</h3>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Muskaan...</p>
+                                    <p class="p5-line">Meeting you was never part of my plan.</p>
+                                    <p class="p5-line">Yet somehow...</p>
+                                    <p class="p5-line p5-line--quote">It became one of the best things that ever happened to me.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 11 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 11, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">Thank you...</p>
+                                    <p class="p5-line">For every conversation.</p>
+                                    <p class="p5-line">For every laugh.</p>
+                                    <p class="p5-line">For every smile.</p>
+                                    <p class="p5-line">For every memory.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 11 (Continued) -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 11, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">I don't want to make promises that life may not allow.</p>
+                                    <p class="p5-line p5-line--quote">But I do want to promise this...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CHAPTER 11 (Continued) — Final page -->
+                        <div class="p5-page">
+                            <div class="p5-page-inner">
+                                <p class="p5-continued-tag">— Chapter 11, continued —</p>
+                                <div class="p5-lines">
+                                    <p class="p5-line">I promise to always respect you.</p>
+                                    <p class="p5-line">I promise to always wish for your happiness.</p>
+                                    <p class="p5-line">I promise to always smile whenever I remember our story.</p>
+                                    <p class="p5-line">No matter where life takes us...</p>
+                                    <p class="p5-line p5-line--emphasis">You'll always have a special place in my heart.</p>
+                                    <p class="p5-line p5-line--emphasis">Happy Birthday Muskaan ❤️</p>
+                                    <p class="p5-line p5-line--quote">With Love, Ajay Kumar</p>
+                                    <button class="p5-final-btn" id="p5-final-btn" type="button">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="p5-nav-btn" id="p5-next" type="button" aria-label="Next page">›</button>
+            </div>
+
+            <p class="p5-hint">Use the arrows, or drag a page's corner to turn it</p>
+        </div>
+
+        <!-- Page-turn sound — swap the file if you'd like a different one -->
+        <audio id="p5-flip-sound" src="assets/audio/page-flip.mp3" preload="auto"></audio>
+    </section>
+
+    <!-- ============================================
+       PHASE 6 — PHOTO GALLERY
+       Hidden until Phase 5 dispatches "phase5:complete".
+       ============================================ -->
+    <section class="phase6" id="phase6">
+        <div class="p6-backdrop" aria-hidden="true">
+            <span class="p6-orb p6-orb--purple"></span>
+            <span class="p6-orb p6-orb--pink"></span>
+        </div>
+
+        <div class="p6-inner">
+            <p class="p6-eyebrow">A Few Favorites</p>
+            <h2 class="p6-title">Our Gallery</h2>
+            <p class="p6-subtitle">Tap a photo to see it up close ❤️</p>
+
+            <div class="p6-clothesline" id="p6-clothesline"></div>
+
+            <button class="p6-continue-btn" id="p6-continue-btn" type="button">
+        Continue
+      </button>
+        </div>
+
+        <!-- Lightbox -->
+        <div class="p6-lightbox" id="p6-lightbox">
+            <div class="p6-lightbox-card">
+                <button class="p6-lightbox-close" id="p6-lightbox-close" type="button" aria-label="Close">×</button>
+                <img class="p6-lightbox-photo" id="p6-lightbox-photo" src="" alt="" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 7 — VIDEO MESSAGE
+       Hidden until Phase 6 dispatches "phase6:complete".
+       ============================================ -->
+    <section class="phase7" id="phase7">
+        <div class="p7-backdrop" aria-hidden="true">
+            <span class="p7-orb p7-orb--purple"></span>
+            <span class="p7-orb p7-orb--gold"></span>
+        </div>
+
+        <div class="p7-inner">
+            <p class="p7-eyebrow">A Message For You</p>
+            <h2 class="p7-title">Just Watch This ❤️</h2>
+
+            <div class="p7-player">
+                <!-- Google Drive embed — replace the ID in the src if you swap videos -->
+                <iframe id="p7-drive-frame" src="https://drive.google.com/file/d/1BbFRcCFUo2IECu4pKJNWl1SHRev1IDgT/preview" allow="autoplay" allowfullscreen frameborder="0"></iframe>
+                <!-- Catches just the first click so we can duck the background
+             music the moment she starts the video, then gets out of the
+             way so every control (play, volume, fullscreen) works normally -->
+                <div class="p7-click-catcher" id="p7-click-catcher"></div>
+            </div>
+
+            <p class="p7-hint">Once you've watched it, tap Continue below ❤️</p>
+            <button class="p7-continue-btn" id="p7-continue-btn" type="button">
+        <span class="p7-continue-pointer" aria-hidden="true">👆</span>
+        Click Here To Continue
+      </button>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 8 — LIVE LOVE COUNTER
+       Hidden until Phase 7 dispatches "phase7:complete".
+       ============================================ -->
+    <section class="phase8" id="phase8">
+        <div class="p8-backdrop" aria-hidden="true">
+            <span class="p8-orb p8-orb--pink"></span>
+            <span class="p8-orb p8-orb--purple"></span>
+        </div>
+
+        <div class="p8-inner">
+            <p class="p8-eyebrow">Still Counting</p>
+            <h2 class="p8-title">Every Second With You</h2>
+            <p class="p8-subtitle">Counting every moment since April 2025</p>
+
+            <div class="p8-counter">
+                <div class="p8-unit">
+                    <p class="p8-unit-value" id="p8-days">0</p>
+                    <p class="p8-unit-label">Days</p>
+                </div>
+                <div class="p8-unit">
+                    <p class="p8-unit-value" id="p8-hours">00</p>
+                    <p class="p8-unit-label">Hours</p>
+                </div>
+                <div class="p8-unit">
+                    <p class="p8-unit-value" id="p8-minutes">00</p>
+                    <p class="p8-unit-label">Minutes</p>
+                </div>
+                <div class="p8-unit">
+                    <p class="p8-unit-value" id="p8-seconds">00</p>
+                    <p class="p8-unit-label">Seconds</p>
+                </div>
+            </div>
+            <p class="p8-since">and counting, forever ❤️</p>
+
+            <button class="p8-continue-btn" id="p8-continue-btn" type="button">Continue</button>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 9 — HOW MUCH I LOVE YOU
+       Hidden until Phase 8 dispatches "phase8:complete".
+       ============================================ -->
+    <section class="phase9" id="phase9">
+        <div class="p9-inner">
+            <p class="p9-eyebrow">A Silly Little Test</p>
+            <h2 class="p9-title">How Much I Love You</h2>
+
+            <div class="p9-bars">
+                <div class="p9-bar-row">
+                    <span class="p9-bar-label">Chocolate</span>
+                    <div class="p9-bar-track">
+                        <div class="p9-bar-fill" data-value="72"></div>
+                    </div>
+                    <span class="p9-bar-pct">0%</span>
+                </div>
+                <div class="p9-bar-row">
+                    <span class="p9-bar-label">Pizza</span>
+                    <div class="p9-bar-track">
+                        <div class="p9-bar-fill" data-value="68"></div>
+                    </div>
+                    <span class="p9-bar-pct">0%</span>
+                </div>
+                <div class="p9-bar-row">
+                    <span class="p9-bar-label">Sleep</span>
+                    <div class="p9-bar-track">
+                        <div class="p9-bar-fill" data-value="80"></div>
+                    </div>
+                    <span class="p9-bar-pct">0%</span>
+                </div>
+                <div class="p9-bar-row">
+                    <span class="p9-bar-label">Everything Else</span>
+                    <div class="p9-bar-track">
+                        <div class="p9-bar-fill" data-value="90"></div>
+                    </div>
+                    <span class="p9-bar-pct">0%</span>
+                </div>
+                <div class="p9-bar-row p9-bar-row--muskaan">
+                    <span class="p9-bar-label">Muskaan</span>
+                    <div class="p9-bar-track">
+                        <div class="p9-bar-fill" data-value="100"></div>
+                    </div>
+                    <span class="p9-bar-pct">0%</span>
+                </div>
+            </div>
+
+            <div class="p9-climax" id="p9-climax">
+                <p class="p9-climax-line">Calculating Infinity...</p>
+                <p class="p9-climax-line is-error">ERROR</p>
+                <p class="p9-climax-line is-final">Love Cannot Be Measured ❤️</p>
+            </div>
+
+            <button class="p9-continue-btn" id="p9-continue-btn" type="button">Continue</button>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 10 — LOVE CALCULATOR
+       Hidden until Phase 9 dispatches "phase9:complete".
+       ============================================ -->
+    <section class="phase10" id="phase10">
+        <div class="p10-card">
+            <p class="p10-eyebrow">Just For Fun</p>
+            <h2 class="p10-title">Love Calculator</h2>
+
+            <div class="p10-names">
+                <div class="p10-name-field">Ajay Kumar</div>
+                <span class="p10-heart-icon">❤️</span>
+                <div class="p10-name-field">Muskaan</div>
+            </div>
+
+            <button class="p10-calc-btn" id="p10-calc-btn" type="button">Calculate</button>
+
+            <div class="p10-loading" id="p10-loading">
+                <div class="p10-spinner"></div>
+                <p class="p10-loading-text" id="p10-loading-text">Reading heartbeats...</p>
+            </div>
+
+            <div class="p10-result" id="p10-result">
+                <p class="p10-result-pct">999999999999%</p>
+                <p class="p10-result-sub">System Overflow</p>
+                <p class="p10-result-final">Too Much Love Detected ❤️</p>
+                <button class="p10-continue-btn" id="p10-continue-btn" type="button">Continue</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 11 — FINALE
+       Hidden until Phase 10 dispatches "phase10:complete".
+       ============================================ -->
+    <section class="phase11" id="phase11">
+        <canvas id="p11-cosmos-canvas" class="p11-cosmos-canvas" aria-hidden="true"></canvas>
+        <div class="p11-hearts" id="p11-hearts" aria-hidden="true"></div>
+
+        <div class="p11-inner">
+            <p class="p11-eyebrow" id="p11-eyebrow">🎉</p>
+            <h2 class="p11-title" id="p11-title">Happy Birthday, Muskaan</h2>
+            <p class="p11-subtitle" id="p11-subtitle">One more thing before we finish...</p>
+            <button class="p11-continue-btn" id="p11-continue-btn" type="button">Continue</button>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 12 — FINAL LETTER
+       Hidden until Phase 11 dispatches "phase11:complete".
+       ============================================ -->
+    <section class="phase12" id="phase12">
+        <div class="p12-card">
+            <p class="p12-eyebrow">One Last Thing</p>
+            <p class="p12-letter-body" id="p12-letter-body"></p>
+            <p class="p12-final-line" id="p12-final-line"></p>
+            <button class="p12-continue-btn" id="p12-continue-btn" type="button">Continue</button>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 13 — FINAL QUESTION
+       Hidden until Phase 12 dispatches "phase12:complete".
+       ============================================ -->
+    <section class="phase13" id="phase13">
+        <div class="p13-inner">
+            <p class="p13-eyebrow">One Last Question</p>
+            <h2 class="p13-question">Will You Keep Making Beautiful Memories With Me?</h2>
+
+            <div class="p13-button-field" id="p13-button-field">
+                <span class="p13-reaction" id="p13-reaction" aria-hidden="true">🥹</span>
+                <button class="p13-btn p13-btn--no" id="p13-no-btn" type="button">NO 💔</button>
+                <button class="p13-btn p13-btn--yes" id="p13-yes-btn" type="button">YES ❤️</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+       PHASE 14 — ENDING (final screen, stays forever)
+       Hidden until Phase 13 dispatches "phase13:complete".
+       ============================================ -->
+    <section class="phase14" id="phase14">
+        <canvas id="p14-cosmos-canvas" class="p14-cosmos-canvas" aria-hidden="true"></canvas>
+        <div class="p14-hearts" id="p14-hearts" aria-hidden="true"></div>
+
+        <div class="p14-inner">
+            <p class="p14-heart-icon" aria-hidden="true">❤️</p>
+            <h2 class="p14-title">Happy Birthday Muskaan ❤️</h2>
+            <div class="p14-divider"></div>
+            <div class="p14-lines">
+                <p>Thank you for making my life happier.</p>
+                <p>Thank you for every smile.</p>
+                <p>Thank you for every memory since April 2025.</p>
+                <p>May this birthday bring you everything you dream of.</p>
+                <p>I hope we keep writing beautiful chapters together.</p>
+            </div>
+            <p class="p14-signoff">Forever Yours, Ajay Kumar ❤️</p>
+        </div>
+    </section>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+    <script src="js/phase0-gate.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/background-music.js"></script>
+    <script src="js/phase1-password.js"></script>
+    <script src="js/cosmos-canvas.js"></script>
+    <script src="js/phase2-cinematic.js"></script>
+    <script src="js/phase3-wheel.js"></script>
+    <script src="js/phase4-cake.js"></script>
+    <script src="js/phase5-flipbook.js"></script>
+    <script src="js/phase6-gallery.js"></script>
+    <script src="js/phase7-video.js"></script>
+    <script src="js/phase8-counter.js"></script>
+    <script src="js/phase9-compare.js"></script>
+    <script src="js/phase10-calculator.js"></script>
+    <script src="js/phase11-finale.js"></script>
+    <script src="js/phase12-letter.js"></script>
+    <script src="js/phase13-question.js"></script>
+    <script src="js/phase14-ending.js"></script>
+</body>
+
+</html>

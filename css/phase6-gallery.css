@@ -1,0 +1,293 @@
+/* ============================================
+   PHASE 6 — PHOTO GALLERY (Polaroid wall)
+   ============================================ */
+
+.phase6 {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 10%, #17111f 0%, #09090b 55%, #060608 100%);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.phase6.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.p6-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.p6-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.5;
+    animation: p3-orb-float 16s ease-in-out infinite alternate;
+}
+
+.p6-orb--purple {
+    width: 360px;
+    height: 360px;
+    top: -8%;
+    left: -6%;
+    background: radial-gradient(circle, rgba(157, 124, 232, 0.45), transparent 70%);
+}
+
+.p6-orb--pink {
+    width: 340px;
+    height: 340px;
+    bottom: -8%;
+    right: -6%;
+    background: radial-gradient(circle, rgba(240, 168, 201, 0.35), transparent 70%);
+    animation-delay: -5s;
+}
+
+.p6-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-sm);
+    width: 100%;
+    max-width: 1000px;
+    max-height: 100%;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.p6-eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 500;
+}
+
+.p6-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    color: var(--text);
+    margin-top: -0.5rem;
+}
+
+.p6-subtitle {
+    font-size: var(--fs-body);
+    color: var(--text-dim);
+    margin-top: -0.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+
+/* ---- Clothesline: photos clipped to hanging threads ---- */
+
+.p6-clothesline {
+    position: relative;
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.p6-string {
+    position: absolute;
+    left: 2%;
+    width: 96%;
+    height: 2px;
+    background: linear-gradient( 90deg, transparent, rgba(217, 180, 95, 0.55) 6%, rgba(217, 180, 95, 0.55) 94%, transparent);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.p6-photo-item {
+    position: absolute;
+    cursor: pointer;
+    transform-origin: top center;
+}
+
+.p6-clip {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 20px;
+    border-radius: 3px;
+    background: linear-gradient(160deg, #f2cf82, #d9b45f 60%, #a9822f);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.45);
+    z-index: 2;
+}
+
+.p6-clip::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    width: 2px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    transform: translateX(-50%);
+}
+
+.p6-photo-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-glass);
+    border: 1px solid rgba(217, 180, 95, 0.3);
+    box-shadow: 0 16px 30px -12px rgba(0, 0, 0, 0.65);
+    transition: box-shadow var(--dur-med) var(--ease-cinematic), border-color var(--dur-med) var(--ease-cinematic);
+}
+
+.p6-photo-item:hover .p6-photo-inner,
+.p6-photo-item:focus-visible .p6-photo-inner {
+    border-color: rgba(217, 180, 95, 0.7);
+    box-shadow: 0 22px 40px -12px rgba(0, 0, 0, 0.7), var(--glow-gold);
+}
+
+.p6-photo-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.p6-photo-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    color: var(--text-faint);
+    font-size: 0.62rem;
+    padding: 0.4rem;
+    text-align: center;
+}
+
+.p6-photo-placeholder .icon {
+    font-size: 1.3rem;
+}
+
+@keyframes p6-sway {
+    0%,
+    100% {
+        transform: rotate(var(--rot, 0deg));
+    }
+    50% {
+        transform: rotate(calc(var(--rot, 0deg) * -1));
+    }
+}
+
+
+/* ---- Continue ---- */
+
+.p6-continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: var(--space-sm);
+    padding: 0.85rem 2.2rem;
+    font-size: var(--fs-body);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--gradient-gold-text);
+    border-radius: 999px;
+    transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p6-continue-btn:hover {
+    box-shadow: var(--glow-gold);
+    transform: scale(1.03) translateY(-1px);
+}
+
+
+/* ---- Lightbox / enlarge popup ---- */
+
+.p6-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg) var(--space-sm);
+    background: rgba(4, 4, 6, 0.78);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-med) var(--ease-cinematic);
+}
+
+.p6-lightbox.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.p6-lightbox-card {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    padding: var(--space-md);
+    background: var(--bg-glass-strong);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    transform: scale(0.85);
+    transition: transform var(--dur-med) var(--ease-cinematic);
+}
+
+.p6-lightbox.is-visible .p6-lightbox-card {
+    transform: scale(1);
+}
+
+.p6-lightbox-photo {
+    width: 100%;
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+}
+
+.p6-lightbox-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gradient-gold-text);
+    color: var(--bg);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glow-gold);
+    transition: transform var(--dur-fast) var(--ease-soft);
+}
+
+.p6-lightbox-close:hover {
+    transform: scale(1.1) rotate(90deg);
+}
+
+.phase6.is-leaving {
+    animation: phase-exit var(--dur-slow) var(--ease-cinematic) forwards;
+}

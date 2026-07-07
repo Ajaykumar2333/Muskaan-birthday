@@ -1,0 +1,407 @@
+/* ============================================
+   PHASE 3 — SPIN THE WHEEL (v2, premium redesign)
+   ============================================ */
+
+.phase3 {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 15%, #17111f 0%, #09090b 55%, #060608 100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.phase3.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Ambient backdrop: blurred glowing orbs + starfield ---- */
+.p3-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.p3-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  animation: p3-orb-float 14s ease-in-out infinite alternate;
+}
+
+.p3-orb--purple {
+  width: 420px;
+  height: 420px;
+  top: -8%;
+  left: -8%;
+  background: radial-gradient(circle, rgba(157, 124, 232, 0.55), transparent 70%);
+}
+
+.p3-orb--pink {
+  width: 380px;
+  height: 380px;
+  bottom: -10%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(240, 168, 201, 0.4), transparent 70%);
+  animation-delay: -4s;
+}
+
+.p3-orb--gold {
+  width: 300px;
+  height: 300px;
+  bottom: 10%;
+  left: 50%;
+  background: radial-gradient(circle, rgba(217, 180, 95, 0.22), transparent 70%);
+  animation-delay: -8s;
+}
+
+@keyframes p3-orb-float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(3%, -4%, 0) scale(1.12);
+  }
+}
+
+.p3-cosmos-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.p3-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-sm);
+  width: 100%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.p3-eyebrow {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.p3-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  color: var(--text);
+  margin-top: -0.5rem;
+}
+
+.p3-subtitle {
+  font-size: var(--fs-body);
+  color: var(--text-dim);
+  margin-top: -0.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+/* ---- Wheel assembly ---- */
+.p3-wheel-wrap {
+  position: relative;
+  width: clamp(320px, 62vw, 620px);
+  aspect-ratio: 1 / 1;
+  animation: p3-wheel-hover 6s ease-in-out infinite alternate;
+}
+
+@keyframes p3-wheel-hover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+.p3-wheel-outer-glow {
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(217, 180, 95, 0.28) 0%,
+    rgba(157, 124, 232, 0.16) 45%,
+    transparent 72%
+  );
+  filter: blur(24px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Pointer: gold diamond, fixed above the wheel ---- */
+.p3-pointer {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--gradient-gold-text);
+  border-radius: 5px;
+  box-shadow: 0 0 22px rgba(217, 180, 95, 0.8), 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 6;
+}
+
+/* ---- Rotating disc ---- */
+.p3-wheel-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 2;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.65), inset 0 0 2px rgba(255, 255, 255, 0.15),
+    0 25px 70px -20px rgba(0, 0, 0, 0.75);
+  filter: drop-shadow(0 0 1px rgba(217, 180, 95, 0.4));
+}
+
+.p3-wheel-svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ---- Fixed glass sheen overlay — does NOT rotate, mimics reflected light ---- */
+.p3-wheel-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(
+      circle at 32% 24%,
+      rgba(255, 255, 255, 0.22),
+      transparent 42%
+    ),
+    radial-gradient(circle at 70% 78%, rgba(255, 255, 255, 0.05), transparent 55%);
+  mix-blend-mode: soft-light;
+}
+
+/* ---- Labels: absolutely positioned, repositioned every frame in JS.
+       They never carry a rotation transform, so text stays horizontal. ---- */
+.p3-labels {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.p3-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.p3-label-emoji {
+  font-size: clamp(1.3rem, 3.4vw, 2rem);
+  line-height: 1;
+}
+
+.p3-label-text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(0.6rem, 1.35vw, 0.78rem);
+  color: var(--text);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* ---- Center hub ---- */
+.p3-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 27%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 5;
+  cursor: pointer;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  background: radial-gradient(circle at 35% 30%, #f8dd9e, #d9b45f 55%, #a9822f 100%);
+  box-shadow: 0 0 0 6px rgba(9, 9, 11, 0.55), 0 0 40px rgba(217, 180, 95, 0.55),
+    inset 0 2px 6px rgba(255, 255, 255, 0.5), inset 0 -6px 14px rgba(0, 0, 0, 0.35);
+  transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p3-hub-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  color: #2a2005;
+  text-transform: uppercase;
+}
+
+.p3-hub:hover:not(.is-disabled) {
+  transform: translate(-50%, -50%) scale(1.07);
+  box-shadow: 0 0 0 6px rgba(9, 9, 11, 0.55), 0 0 60px rgba(217, 180, 95, 0.75),
+    inset 0 2px 6px rgba(255, 255, 255, 0.5), inset 0 -6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.p3-hub:active:not(.is-disabled) {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.p3-hub.is-disabled {
+  cursor: not-allowed;
+  filter: saturate(0.7) brightness(0.85);
+}
+
+.p3-hint {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  margin-top: var(--space-xs);
+}
+
+/* ---- Result overlay ---- */
+.p3-result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  background: rgba(4, 4, 6, 0.7);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease-cinematic);
+}
+
+.p3-result-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.p3-result-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--bg-glass-strong);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  box-shadow: var(--shadow-card), var(--glow-gold);
+  text-align: center;
+  transform: scale(0.85);
+  transition: transform var(--dur-med) var(--ease-cinematic);
+}
+
+.p3-result-overlay.is-visible .p3-result-card {
+  transform: scale(1);
+}
+
+.p3-result-emoji {
+  font-size: 3.4rem;
+  margin-bottom: var(--space-sm);
+  filter: drop-shadow(0 0 20px rgba(217, 180, 95, 0.5));
+}
+
+.p3-result-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: var(--space-sm);
+}
+
+.p3-result-desc {
+  font-size: var(--fs-body);
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.p3-claim-btn,
+.p3-continue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.3rem;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--accent-gold-bright), var(--accent-pink));
+  border-radius: 999px;
+  transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p3-claim-btn:hover,
+.p3-continue-btn:hover {
+  box-shadow: var(--glow-gold);
+  transform: scale(1.04) translateY(-1px);
+}
+
+/* ---- Claimed state (content swap inside the same card) ---- */
+.p3-claimed-block {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.p3-claimed-block.is-visible {
+  display: flex;
+}
+
+.p3-result-body.is-hidden {
+  display: none;
+}
+
+.p3-claimed-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.6vw, 1.8rem);
+  color: var(--accent-gold-bright);
+}
+
+/* Whole-phase exit transition */
+.phase3.is-leaving {
+  animation: phase-exit var(--dur-slow) var(--ease-cinematic) forwards;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .p3-hub-text {
+    letter-spacing: 0.08em;
+  }
+}

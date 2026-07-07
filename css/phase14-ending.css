@@ -1,0 +1,132 @@
+/* ============================================
+   PHASE 14 — ENDING
+   The true end of the site. No continue button — this stays.
+   ============================================ */
+
+.phase14 {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 8%, #1a1424 0%, #0c0a12 45%, #030304 100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.phase14.is-active {
+  opacity: 1;
+  visibility: visible;
+  animation: p14-fade-in 2.2s var(--ease-cinematic) forwards;
+}
+
+@keyframes p14-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Soft vignette so the card reads clearly against the starfield */
+.phase14::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 45%, rgba(9, 9, 11, 0) 35%, rgba(6, 6, 8, 0.55) 100%);
+  pointer-events: none;
+}
+
+.p14-cosmos-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.p14-hearts {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.p14-heart {
+  position: absolute;
+  bottom: -60px;
+  font-size: 1.2rem;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 10px rgba(217, 180, 95, 0.5));
+  animation: p11-rise linear forwards;
+}
+
+.p14-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  max-width: 600px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(217, 180, 95, 0.22);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  box-shadow: var(--shadow-card), 0 0 90px rgba(157, 124, 232, 0.15);
+}
+
+.p14-heart-icon {
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  margin-bottom: var(--space-xs);
+  filter: drop-shadow(0 0 22px rgba(240, 168, 201, 0.6));
+  animation: p14-heart-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes p14-heart-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+}
+
+.p14-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 6.5vw, 3.4rem);
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: var(--space-sm);
+}
+
+.p14-divider {
+  width: 64px;
+  height: 1px;
+  margin: 0 auto var(--space-md);
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.p14-lines p {
+  font-size: clamp(0.95rem, 2.1vw, 1.1rem);
+  color: var(--text-dim);
+  line-height: 1.95;
+}
+
+.p14-signoff {
+  margin-top: var(--space-lg);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  color: var(--text);
+}
