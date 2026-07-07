@@ -1,0 +1,117 @@
+/* ============================================
+   DESIGN TOKENS
+   A love story, told like a film — not a card.
+   ============================================ */
+
+:root {
+  /* ---- Color: base ---- */
+  --bg: #09090b;
+  --bg-elevated: #111114;
+  --bg-glass: rgba(255, 255, 255, 0.045);
+  --bg-glass-strong: rgba(255, 255, 255, 0.08);
+  --border-glass: rgba(255, 255, 255, 0.09);
+  --border-glass-hover: rgba(255, 255, 255, 0.18);
+
+  /* ---- Color: text ---- */
+  --text: #f5f5f7;
+  --text-dim: #a8a8b3;
+  --text-faint: #6b6b75;
+
+  /* ---- Color: accents ----
+     Purple = the night. Pink = the warmth. Gold = the moment. */
+  --accent-purple: #9d7ce8;
+  --accent-purple-deep: #4c3480;
+  --accent-pink: #f0a8c9;
+  --accent-gold: #d9b45f;
+  --accent-gold-bright: #f2cf82;
+
+  /* ---- Gradients ---- */
+  --gradient-aurora: radial-gradient(
+      circle at 30% 20%,
+      rgba(157, 124, 232, 0.35),
+      transparent 55%
+    ),
+    radial-gradient(circle at 75% 70%, rgba(240, 168, 201, 0.22), transparent 55%),
+    radial-gradient(circle at 50% 95%, rgba(217, 180, 95, 0.12), transparent 60%);
+
+  --gradient-gold-text: linear-gradient(135deg, #f2cf82 0%, #d9b45f 50%, #f0a8c9 100%);
+
+  /* ---- Type ---- */
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --fs-eyebrow: 0.72rem;
+  --fs-body: 1rem;
+  --fs-body-lg: 1.15rem;
+  --fs-h3: clamp(1.4rem, 2vw + 1rem, 2rem);
+  --fs-h2: clamp(2rem, 3vw + 1rem, 3rem);
+  --fs-h1: clamp(2.8rem, 6vw + 1rem, 5.5rem);
+
+  --tracking-eyebrow: 0.32em;
+  --tracking-wide: 0.08em;
+
+  /* ---- Spacing ---- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.75rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+
+  /* ---- Motion ---- */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.25s;
+  --dur-med: 0.6s;
+  --dur-slow: 1.4s;
+
+  /* ---- Shadow / glow ---- */
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+  --glow-gold: 0 0 40px rgba(217, 180, 95, 0.25);
+  --glow-purple: 0 0 60px rgba(157, 124, 232, 0.25);
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+/* Safety net for every fullscreen phase section: if its content is ever
+   taller than the viewport (long letter text, small/landscape screens),
+   it scrolls internally instead of trapping the user with unreachable
+   buttons below the fold. Scrollbar stays hidden to match the rest of
+   the site. */
+section[class^="phase"] {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+section[class^="phase"]::-webkit-scrollbar {
+  display: none;
+}
+
+/* Any section that needs internal scrolling (long galleries, book pages,
+   etc.) scrolls via wheel/touch but shows no visible scrollbar track —
+   keeps the cinematic, chrome-free feel */
+.p6-inner,
+.p5-page-body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.p6-inner::-webkit-scrollbar,
+.p5-page-body::-webkit-scrollbar {
+  display: none;
+}

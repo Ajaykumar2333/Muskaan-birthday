@@ -1,0 +1,156 @@
+/* ============================================
+   PHASE 8 — LIVE LOVE COUNTER
+   ============================================ */
+
+.phase8 {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 10%, #17111f 0%, #09090b 55%, #060608 100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.phase8.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.p8-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.p8-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  animation: p3-orb-float 16s ease-in-out infinite alternate;
+}
+
+.p8-orb--pink {
+  width: 360px;
+  height: 360px;
+  top: -8%;
+  left: -6%;
+  background: radial-gradient(circle, rgba(240, 168, 201, 0.4), transparent 70%);
+}
+
+.p8-orb--purple {
+  width: 320px;
+  height: 320px;
+  bottom: -8%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(157, 124, 232, 0.4), transparent 70%);
+  animation-delay: -6s;
+}
+
+.p8-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-sm);
+  width: 100%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.p8-eyebrow {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.p8-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  color: var(--text);
+  margin-top: -0.5rem;
+}
+
+.p8-subtitle {
+  font-size: var(--fs-body);
+  color: var(--text-dim);
+  margin-top: -0.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.p8-counter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.6rem, 2.5vw, 1.2rem);
+}
+
+.p8-unit {
+  width: clamp(80px, 20vw, 130px);
+  padding: var(--space-md) 0.5rem;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.p8-unit-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+.p8-unit-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 0.25rem;
+}
+
+.p8-since {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  margin-top: -0.4rem;
+}
+
+.p8-continue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: var(--space-sm);
+  padding: 0.85rem 2.2rem;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gradient-gold-text);
+  border-radius: 999px;
+  transition: transform var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.p8-continue-btn:hover {
+  box-shadow: var(--glow-gold);
+  transform: scale(1.03) translateY(-1px);
+}
+
+.phase8.is-leaving {
+  animation: phase-exit var(--dur-slow) var(--ease-cinematic) forwards;
+}
